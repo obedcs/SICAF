@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="226" pageHeight="753" columnWidth="226" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="be8fd7b4-561e-4807-8bcd-733b3d4fd80b">
+	<property name="ireport.zoom" value="2.4157650000000013"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="624"/>
+	<parameter name="Folio" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+vnc_fecha,vnc_folio,vni_desc,vnn_cantidad,vnn_precio,vnn_descuento,nombre
+FROM vncabecera
+INNER JOIN vnnota ON vnn_folio=vnc_folio
+INNER JOIN vninventario ON vnn_articulo=vni_clave
+INNER JOIN vncargos ON vncargos.id=vnc_cargo
+WHERE vnc_folio = $P{Folio}]]>
+	</queryString>
+	<field name="vnc_fecha" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="vnc_folio" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="vni_desc" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="vnn_cantidad" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="vnn_precio" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="vnn_descuento" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="TotalArt" class="java.lang.Float">
+		<variableExpression><![CDATA[($F{vnn_cantidad}*$F{vnn_precio})-$F{vnn_descuento}]]></variableExpression>
+	</variable>
+	<variable name="SubTotal" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{vnn_cantidad}*$F{vnn_precio}]]></variableExpression>
+	</variable>
+	<variable name="Desc" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{vnn_descuento}]]></variableExpression>
+	</variable>
+	<variable name="Total" class="java.lang.Float">
+		<variableExpression><![CDATA[$V{SubTotal}-$V{Desc}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="165" splitType="Stretch">
+			<staticText>
+				<reportElement x="35" y="108" width="154" height="30" uuid="d1fb2d8b-8a9f-44d0-8981-7dadc24d527b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[SERVICIO DE CAFETERÍA CARGO A EMPLEADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="143" width="63" height="20" uuid="de2c8b55-b088-4488-9a96-2a4bfbbf00f2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="134" y="143" width="35" height="20" uuid="c5e663a4-3723-4a84-aef4-fe5adb9334d4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SUB-TOT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="173" y="143" width="26" height="20" uuid="1fbb779b-21a2-41c8-ac01-a71892721007"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<line>
+				<reportElement x="4" y="163" width="219" height="1" uuid="732fe44c-e765-4dd8-8756-fe0980d4893f"/>
+			</line>
+			<line>
+				<reportElement x="6" y="142" width="217" height="1" uuid="e76c8b4d-a526-4a48-9fad-8035eebe46b0"/>
+			</line>
+			<staticText>
+				<reportElement x="19" y="143" width="22" height="20" uuid="41448ffd-e191-4e20-ad6b-dfd3e1c6ea82"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="19" width="181" height="18" uuid="045dee38-8908-4d08-80a9-56b9c7036898"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[HOSPITAL DEL SURESTE A.C.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="32" y="38" width="161" height="51" uuid="23c309fc-f559-4ed8-9ae8-20b325a1bfde"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<text><![CDATA[Regino Hernandez Llergo #103, Col. Nueva Villahermosa
+Villahermosa Tabasco, Mexico.   Tel (993) 315 1241 - (993) 314 4200]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="121" y="91" width="30" height="12" uuid="fc531a1c-5ef4-4274-a1cd-669ba4c0dfdc"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Courier New" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<textField pattern="dd-MMM-yy">
+				<reportElement x="151" y="91" width="52" height="12" uuid="2ce04ea5-f52d-455f-b28e-b5cb9e60ee4a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vnc_fecha}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="18" y="91" width="37" height="12" uuid="cc787f11-e71b-449e-89aa-48d47da9d127"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Courier New" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Folio:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="55" y="91" width="66" height="12" uuid="5cda14da-2b43-42bd-98c8-54e4825c4fa8"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vnc_folio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="41" y="0" width="93" height="10" uuid="57e458fe-3acd-47ca-a31b-7b355e54348a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vni_desc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="0" width="21" height="10" uuid="e3bb8cc1-773d-4d75-8375-44ceb7f75176"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vnn_cantidad}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.0">
+				<reportElement x="134" y="0" width="39" height="10" uuid="7183401c-140d-4935-8996-ca0a873f2fd4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vnn_descuento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.0">
+				<reportElement x="173" y="0" width="40" height="10" uuid="d3a9b0d8-a0b7-4c53-85a2-298093b07650"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalArt}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="243" splitType="Stretch">
+			<staticText>
+				<reportElement x="21" y="6" width="178" height="50" uuid="1de100e5-58cc-4645-b163-35985853e6e2"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<text><![CDATA[Éste comprobante  no tiene validez fiscal. Si usted necesita una representación impresa de un CFDI; favor de solicitarlo al cajero. Estamos para servirle.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="66" width="176" height="15" uuid="f355dbff-4c64-4939-8c36-4e33111e1458"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Courier New" size="8" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[HOSPITAL DEL SURESTE A.C.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="79" width="176" height="27" uuid="890b2cb7-c69f-4978-9a49-928944a45100"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Courier New" size="8" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Sirviendo con Amor al Sureste Mexicano]]></text>
+			</staticText>
+			<textField pattern="yyyy.MMMMM.dd GGG hh:mm aaa">
+				<reportElement x="21" y="220" width="176" height="20" uuid="6beb6443-e8f9-4793-919c-579517a7aaf0"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Courier New" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="22" y="188" width="177" height="20" uuid="62bdd58d-d77d-4ac9-bee7-bded81a76adb"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false">
+					<jr:codeExpression><![CDATA[$F{vnc_folio}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<line>
+				<reportElement x="35" y="144" width="154" height="1" uuid="47672b03-6f75-4025-858d-bf62fc516168"/>
+			</line>
+			<staticText>
+				<reportElement x="25" y="146" width="172" height="13" uuid="c6f85133-fed5-401f-a5da-983748ffe27b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<text><![CDATA[FIRMA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="25" y="159" width="172" height="20" uuid="a3b3c9ed-4117-497e-8632-8a83f7f6892c"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="50">
+			<rectangle radius="10">
+				<reportElement x="95" y="8" width="105" height="34" uuid="8a2d8a97-f2e6-451e-b5b6-c0452d2162bc"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="107" y="8" width="45" height="12" uuid="7bbc952a-3dda-4761-a63b-2a27a3ed2ed1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Courier New" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SubTotal:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="94" y="19" width="58" height="12" uuid="a9d61f20-bfe9-4350-a0de-c9bd3467f17e"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Courier New" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descuento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="118" y="30" width="34" height="12" uuid="8df5534f-6f09-43e9-b77a-7c62315453bc"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Courier New" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.0">
+				<reportElement x="156" y="8" width="41" height="12" uuid="a4616fcb-039b-41ba-b812-7439bcb3f760"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SubTotal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.0">
+				<reportElement x="156" y="19" width="41" height="12" uuid="255aab45-9ff2-4b5b-838a-3241fd1f78ee"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Desc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.0">
+				<reportElement x="156" y="30" width="41" height="12" uuid="13767dd1-bc14-45ba-a44b-2476ea1e9de0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

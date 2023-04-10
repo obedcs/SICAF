@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="226" pageHeight="753" columnWidth="226" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="be8fd7b4-561e-4807-8bcd-733b3d4fd80b">
+	<property name="ireport.zoom" value="2.4157650000000013"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="302"/>
+	<parameter name="folio" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT cliente,ventascab.folio,ventascab.fecha,vendedor,articulo,descripcion,precio,descuento,ventascont.cantidad,
+nombre,autorizacion,departamento.depto
+FROM ventascab
+INNER JOIN ventascont ON ventascab.folio=ventascont.folio
+INNER JOIN inventario ON ventascont.articulo=inventario.clave
+INNER JOIN usuarios ON ventascab.vendedor=usuarios.usuario
+INNER JOIN cargos ON ventascab.folio=cargos.folio
+INNER JOIN departamento ON cargos.depto=departamento.id
+WHERE ventascab.folio = $P{folio}]]>
+	</queryString>
+	<field name="cliente" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="folio" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="vendedor" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="articulo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descripcion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="precio" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descuento" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cantidad" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="autorizacion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="depto" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="SubTotNota" class="java.lang.Float">
+		<variableExpression><![CDATA[$F{cantidad} * $F{precio}]]></variableExpression>
+	</variable>
+	<variable name="TotalNota" class="java.lang.Float">
+		<variableExpression><![CDATA[$V{SubTotNota} - $F{descuento}]]></variableExpression>
+	</variable>
+	<variable name="SubTotalGral" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$V{SubTotNota}]]></variableExpression>
+	</variable>
+	<variable name="DesctoGral" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{descuento}]]></variableExpression>
+	</variable>
+	<variable name="TotalGral" class="java.lang.Float">
+		<variableExpression><![CDATA[$V{SubTotalGral}-$V{DesctoGral}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="172" splitType="Stretch">
+			<staticText>
+				<reportElement x="35" y="119" width="154" height="27" uuid="d1fb2d8b-8a9f-44d0-8981-7dadc24d527b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[SERVICIO DE CAFETERÍA CARGOS A DEPARTAMENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="150" width="63" height="20" uuid="de2c8b55-b088-4488-9a96-2a4bfbbf00f2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="134" y="150" width="35" height="20" uuid="c5e663a4-3723-4a84-aef4-fe5adb9334d4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SUB-TOT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="173" y="150" width="26" height="20" uuid="1fbb779b-21a2-41c8-ac01-a71892721007"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<line>
+				<reportElement x="4" y="170" width="219" height="1" uuid="732fe44c-e765-4dd8-8756-fe0980d4893f"/>
+			</line>
+			<line>
+				<reportElement x="6" y="149" width="217" height="1" uuid="e76c8b4d-a526-4a48-9fad-8035eebe46b0"/>
+			</line>
+			<staticText>
+				<reportElement x="19" y="150" width="22" height="20" uuid="41448ffd-e191-4e20-ad6b-dfd3e1c6ea82"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="19" width="181" height="18" uuid="045dee38-8908-4d08-80a9-56b9c7036898"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[HOSPITAL DEL SURESTE A.C.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="32" y="38" width="161" height="51" uuid="23c309fc-f559-4ed8-9ae8-20b325a1bfde"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<text><![CDATA[Regino Hernandez Llergo #103, Col. Nueva Villahermosa
+Villahermosa Tabasco, Mexico.   Tel (993) 315 1241 - (993) 314 4200]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="121" y="98" width="30" height="12" uuid="fc531a1c-5ef4-4274-a1cd-669ba4c0dfdc"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Courier New" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<textField pattern="dd-MMM-yy">
+				<reportElement x="151" y="98" width="52" height="12" uuid="2ce04ea5-f52d-455f-b28e-b5cb9e60ee4a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="18" y="98" width="31" height="12" uuid="cc787f11-e71b-449e-89aa-48d47da9d127"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Courier New" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Folio:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="49" y="98" width="45" height="12" uuid="15ed2ac0-75d4-4760-ab18-a8deda3e366c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{folio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<textField>
+				<reportElement x="41" y="0" width="93" height="10" uuid="57e458fe-3acd-47ca-a31b-7b355e54348a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="0" width="21" height="10" uuid="e3bb8cc1-773d-4d75-8375-44ceb7f75176"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="134" y="0" width="39" height="10" uuid="cab5c670-bb0c-4627-89e9-1d8e8a537a5f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SubTotNota}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="173" y="0" width="40" height="10" uuid="0d01c323-8c4b-4bdc-b720-05ed3bee7a82"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalNota}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="32" splitType="Stretch">
+			<textField pattern="dd.MMMMM.yyyy  hh:mm aaa">
+				<reportElement x="20" y="18" width="178" height="14" uuid="6beb6443-e8f9-4793-919c-579517a7aaf0"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Courier New" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="10" width="178" height="9" uuid="df051042-8074-42ef-a1da-86a9121e0b07"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CAJERO: "+$F{nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="132">
+			<rectangle radius="10">
+				<reportElement x="95" y="19" width="105" height="34" uuid="8a2d8a97-f2e6-451e-b5b6-c0452d2162bc"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="107" y="19" width="45" height="12" uuid="7bbc952a-3dda-4761-a63b-2a27a3ed2ed1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Courier New" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SubTotal:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="94" y="30" width="58" height="12" uuid="a9d61f20-bfe9-4350-a0de-c9bd3467f17e"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Courier New" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descuento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="118" y="41" width="34" height="12" uuid="8df5534f-6f09-43e9-b77a-7c62315453bc"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Courier New" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="151" y="19" width="49" height="12" uuid="1b5dd587-00d0-45e3-8ed5-2f4082851c2c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SubTotalGral}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="151" y="30" width="49" height="12" uuid="067b1f89-a7cc-4f7a-bfd3-06da14ad6ef9"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{DesctoGral}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="151" y="41" width="49" height="12" uuid="c8d8dbdd-c307-4dcb-9ac7-01c140c0de05"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalGral}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="22" y="108" width="176" height="11" uuid="9abcbef6-b09a-4004-9537-50afc7b69262"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{autorizacion}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="20" y="107" width="181" height="1" uuid="cd6858e2-4dc2-489e-9396-639218f92797"/>
+			</line>
+			<textField>
+				<reportElement x="22" y="118" width="176" height="11" uuid="ee14cc3a-7106-4ff1-97d7-dc31c9ed7c87"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{depto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

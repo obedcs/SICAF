@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="556" pageHeight="753" columnWidth="556" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b285214a-e5f7-4d56-ac71-8f62e466e0bb">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Fecha" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FinFecha" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="IDEmpleado" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT nombre,vnn_articulo,vni_desc,sum(vnn_cantidad)AS recuento,
+sum((vnn_cantidad*vnn_precio)-vnn_descuento)AS total
+FROM vnnota
+INNER JOIN vncabecera ON vnc_folio=vnn_folio
+INNER JOIN vninventario ON vni_clave=vnn_articulo
+INNER JOIN vncargos ON vnc_cargo=vncargos.id
+WHERE vnc_cargo = $P{IDEmpleado}
+AND vnc_fecha BETWEEN $P{Fecha} AND $P{FinFecha}
+GROUP BY vnn_articulo]]>
+	</queryString>
+	<field name="nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="vnn_articulo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="vni_desc" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="recuento" class="java.math.BigDecimal"/>
+	<field name="total" class="java.lang.Double"/>
+	<variable name="Total" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="154" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Transparent" x="33" y="13" width="480" height="111" backcolor="#FFFFFF" uuid="6655ea69-4c2e-4f01-b12f-d78592adea1e"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="157" y="13" width="304" height="41" uuid="dab2fdce-c75e-4741-af81-732d7b5c9c7e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HOSPITAL DEL SURESTE A.C.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="159" y="66" width="80" height="20" uuid="7efd5a38-b88e-44d7-a6cd-1e2ccf00addb"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERIODO:]]></text>
+			</staticText>
+			<textField pattern="dd-MMM-yyyy">
+				<reportElement x="240" y="66" width="88" height="20" uuid="072b5eef-2cb1-4575-b382-f2570c9e1c9e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Fecha}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="327" y="66" width="13" height="20" uuid="0a3bc2b1-863d-4b4e-af08-dfd81c6523ec"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<textField pattern="dd-MMM-yyyy">
+				<reportElement x="339" y="66" width="87" height="20" uuid="ee3ce430-a68b-4939-9628-ec5c1205983e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FinFecha}]]></textFieldExpression>
+			</textField>
+			<image vAlign="Middle">
+				<reportElement x="34" y="14" width="123" height="110" uuid="61f40251-b1ce-44d8-a9cf-28e7bec4fd63"/>
+				<imageExpression><![CDATA["\\\\10.55.4.4\\Sistemas HSTE\\CafeteriaHSAC\\Logo\\Logo.jpg"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="6" y="151" width="546" height="1" uuid="1ff55df4-4b63-4b43-a245-f0011120c7f7"/>
+			</line>
+			<staticText>
+				<reportElement x="34" y="135" width="50" height="16" uuid="1d046f99-a32b-4469-b94d-9e1fc923de22"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ART]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="408" y="135" width="88" height="16" uuid="4862f5d5-e7dc-4f5a-aaad-25949ad24306"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CARGO TOTAL]]></text>
+			</staticText>
+			<line>
+				<reportElement x="6" y="133" width="546" height="1" uuid="3caf06c9-f6f7-42b5-9cd0-8f3072ef5eea"/>
+			</line>
+			<staticText>
+				<reportElement x="163" y="45" width="304" height="20" uuid="73297f4c-60b2-4e93-8417-b33b33cbbd66"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE CARGOS A EMPLEADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="157" y="86" width="96" height="20" uuid="35009178-6296-446a-8dbd-c7e0e1d229e3"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EMPLEADO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="255" y="86" width="258" height="38" uuid="c89df7a7-0a58-4b03-9ecd-075ffe44ac7c"/>
+				<textElement verticalAlignment="Top">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="93" y="135" width="92" height="16" uuid="d803b54e-0854-448e-9835-3f616595abcf"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="363" y="135" width="45" height="16" uuid="b106c363-749a-4b61-b6ad-390031daff39"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ACUM]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField>
+				<reportElement x="84" y="0" width="279" height="13" uuid="4992a479-dc25-4a38-a719-e63758de4264"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{vni_desc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="411" y="0" width="104" height="13" uuid="77c21b0d-77d8-4a20-ab4d-85912bb7cb3c"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="33" y="0" width="51" height="13" uuid="e612fc88-78a9-45dc-b249-aca75bc45275"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{vnn_articulo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="363" y="0" width="46" height="13" uuid="588ef2e9-dbe2-4ea6-b067-d0f4a78eb09d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{recuento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="87" splitType="Stretch">
+			<textField>
+				<reportElement x="427" y="49" width="56" height="20" uuid="1316a5a9-c576-40e8-8f34-58c47b0f1c33"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Pág. "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="483" y="49" width="40" height="20" uuid="9a4d8f32-a959-43f1-baee-4c5d5fa05dc5"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="343" y="46" width="66" height="12" uuid="4cf25b3f-3558-4af8-94c5-f6749291bb9e"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="h.mm.ss a">
+				<reportElement x="343" y="57" width="66" height="12" uuid="47c06675-dd63-4007-b92c-a2f8482c5d02"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="7" y="12" width="546" height="1" uuid="b13412ed-f8ea-446a-b3bd-5b36b026ed78"/>
+			</line>
+			<staticText>
+				<reportElement x="279" y="46" width="60" height="12" uuid="502ad397-d90b-4157-862d-1a097868e105"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de Impr:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="57" width="60" height="12" uuid="ca5fdd6e-e956-412b-b1e5-6ce933579c95"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora de Impr:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="33" y="22" width="119" height="16" uuid="91d0b1b8-ceac-476b-932b-bf404bbeaf84"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HOSPITAL DEL SURESTE A.C.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="33" y="39" width="222" height="11" uuid="3c13cd07-241f-483e-b8ff-872cb99bdd0b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Regino Hernández Llergo No. 103, Col. Nueva Villahermosa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="33" y="49" width="222" height="11" uuid="1d2423a9-0654-4fb0-8611-079761025118"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[C.P. 86070, TEL. (993) 315 1241 - (993) 314 4200]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="33" y="59" width="222" height="11" uuid="5627fbc2-8443-4928-ab03-032cec130f3a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Villahermosa, Tabasco.    RFC: HSU101217-AYA]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="40">
+			<rectangle>
+				<reportElement mode="Opaque" x="374" y="6" width="130" height="20" backcolor="#CCCCCC" uuid="92cc49f9-7e31-496e-a7f9-1aa97ec2e50a"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="374" y="6" width="35" height="20" uuid="8536bb1d-a65f-4df4-86be-0ae8676677ba"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="409" y="6" width="95" height="20" uuid="8ac6198a-4374-4cf2-b31a-3decdd57d2a9"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{Total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="556" pageHeight="753" columnWidth="556" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a98e205a-e17b-4d87-8199-b993c3cb2367">
+	<property name="ireport.zoom" value="1.2396694214876032"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fechainicio" class="java.lang.String"/>
+	<parameter name="fechafin" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT departamento.depto,SUM(precio*ventascont.cantidad)-descuento AS total
+FROM departamento
+INNER JOIN cargos ON departamento.id = cargos.depto
+INNER JOIN ventascab ON cargos.folio = ventascab.folio
+INNER JOIN ventascont ON ventascab.folio = ventascont.folio
+INNER JOIN inventario ON ventascont.articulo=inventario.clave
+WHERE cargo = 1
+AND ventascab.fecha BETWEEN $P{fechainicio} AND $P{fechafin}
+GROUP BY depto
+ORDER BY depto ASC;]]>
+	</queryString>
+	<field name="depto" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total" class="java.lang.Double"/>
+	<variable name="TOTAL" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="170" splitType="Stretch">
+			<staticText>
+				<reportElement x="157" y="94" width="230" height="28" uuid="bf78a990-882c-4603-9242-6895bef86e82"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="20" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[CARGOS A HOSPITAL]]></text>
+			</staticText>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="212" y="2" width="114" height="92" uuid="61665146-b3f7-4e3f-9543-eef2c7d5c201"/>
+				<imageExpression><![CDATA["\\\\10.55.4.4\\Sistemas HSTE\\CafeteriaHSAC\\Logo\\Logo.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="78" y="148" width="92" height="20" uuid="aa813ea7-6ccd-440f-ba90-2cc0cb05601a"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DEPARTAMENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="403" y="148" width="48" height="20" uuid="30c6709a-90d0-4cbe-ac11-5f50551d631d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<line>
+				<reportElement x="11" y="168" width="537" height="1" uuid="94f0830c-0654-41ac-841e-d14a0df7ec2a"/>
+			</line>
+			<line>
+				<reportElement x="11" y="147" width="537" height="1" uuid="39b9e476-8f7b-4465-866e-9789136596b2"/>
+			</line>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="45" y="123" width="457" height="14" uuid="9a00bf98-002e-4790-9fa8-a2a32bd2554f"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["de: "+$P{fechainicio}+"  hasta: "+$P{fechafin}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="11" splitType="Stretch">
+			<textField>
+				<reportElement x="77" y="0" width="326" height="11" uuid="0e558ac5-d451-4f86-b50e-6d26b85e75f1"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{depto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="403" y="0" width="102" height="11" uuid="59695f8d-1ea6-4223-875f-f4aaa4c0505a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="78" splitType="Stretch">
+			<textField>
+				<reportElement x="37" y="58" width="56" height="20" uuid="89a50426-ed4b-4ec4-b2cc-719478e0f369"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Pág. "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="93" y="58" width="40" height="20" uuid="32154a29-af0d-4ba4-88f2-97abb0460baf"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd.MMMMM.yyyy  hh:mm aaa">
+				<reportElement x="387" y="58" width="160" height="20" uuid="23ac2e83-9110-404b-b601-1c25dc982c9b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="220">
+			<staticText>
+				<reportElement x="340" y="18" width="74" height="25" uuid="eb7fe421-8b5f-4d16-b664-833a02665c57"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="414" y="18" width="109" height="25" uuid="91421303-873a-4b77-837b-b345504c5c09"/>
+				<textElement verticalAlignment="Middle">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="61" y="64" width="191" height="134" uuid="ed96c11f-1a7b-4e7f-a6d9-571aa3a8bd7d"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="61" y="178" width="191" height="20" uuid="42c7b6d9-7e4d-4f0f-bcd5-fdd428c4cecf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONTABILIDAD]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="295" y="64" width="191" height="134" uuid="cbcc2b48-58f5-4ea1-8ee6-49bf317b92d9"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="295" y="178" width="191" height="20" uuid="42a213ac-941a-4f6d-832f-a8b28fc68a1a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CAFETERIA]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

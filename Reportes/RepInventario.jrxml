@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="14e8b328-e6d5-4330-bff6-08f2ebf5dc28">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     vninventario.`vni_clave` AS vninventario_vni_clave,
+     vninventario.`vni_desc` AS vninventario_vni_desc,
+     vninventario.`vni_precio` AS vninventario_vni_precio,
+     vninventario.`vni_cant` AS vninventario_vni_cant
+FROM
+     `vninventario` vninventario
+ORDER BY vninventario.`vni_desc` ASC]]>
+	</queryString>
+	<field name="vninventario_vni_clave" class="java.lang.String"/>
+	<field name="vninventario_vni_desc" class="java.lang.String"/>
+	<field name="vninventario_vni_precio" class="java.lang.String"/>
+	<field name="vninventario_vni_cant" class="java.lang.String"/>
+	<group name="vninventario_vni_clave">
+		<groupExpression><![CDATA[$F{vninventario_vni_clave}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="93" splitType="Stretch">
+			<staticText>
+				<reportElement x="228" y="13" width="234" height="54" uuid="a6d2beee-647b-4020-bb8e-d9df1983013d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE INVENTARIO GENERAL]]></text>
+			</staticText>
+			<image hAlign="Center">
+				<reportElement x="111" y="0" width="110" height="93" uuid="b6b47f84-ecf8-4209-8ec9-388e4c99c951"/>
+				<imageExpression><![CDATA["\\\\10.55.4.4\\Sistemas HSTE\\CafeteriaHSAC\\Logo\\Logo.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="32" splitType="Stretch">
+			<staticText>
+				<reportElement x="453" y="11" width="59" height="19" uuid="c8c62e2e-5b5f-4c41-a285-bd23280f4663"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRECIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="103" y="11" width="285" height="19" uuid="065fd0b8-7f54-451f-a251-002c6581bd30"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="54" y="11" width="49" height="19" uuid="6628ef99-dcc8-4844-89db-7ee1eea08363"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CLAVE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="395" y="11" width="58" height="19" uuid="633bf0f1-2dbb-470c-a6ec-ddd3a276d0a7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD]]></text>
+			</staticText>
+			<line>
+				<reportElement x="3" y="10" width="569" height="1" uuid="d9a08c3c-8df9-4a9c-9d2d-6c09b463abd7"/>
+			</line>
+			<line>
+				<reportElement x="3" y="29" width="569" height="1" uuid="537ad373-0de0-4d62-80a1-fffa64a572f7"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField>
+				<reportElement x="51" y="0" width="49" height="14" uuid="5c6d09ef-f6f5-47be-8618-a5ed775d6fd0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{vninventario_vni_clave}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="0" width="285" height="14" uuid="587dc4e6-df8c-4e5d-b0f8-0291ebfca8b3"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{vninventario_vni_desc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="395" y="0" width="58" height="14" uuid="4b3b6791-bc7d-4de5-9988-a0292b28d82b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{vninventario_vni_cant}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="479" y="0" width="59" height="14" uuid="c79f80df-d344-4605-8a9f-e1cfc80861e0"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{vninventario_vni_precio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="465" y="0" width="14" height="14" uuid="747af724-7bc4-445b-af88-fb1121081d43"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[$]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="75" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="448" y="48" width="124" height="20" uuid="2bb5b6e4-12a8-4076-8ddd-990956b10bcc"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="291" y="48" width="69" height="20" uuid="fb746f4f-c8b4-488f-9617-6ff75ff82521"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pág. "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="360" y="48" width="40" height="20" uuid="df2b1251-ebac-4886-81c7-67a500291714"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="47" width="222" height="11" uuid="df23e803-554b-422e-859c-ec7a6c5973d6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[C.P. 86070, TEL. (993) 315 1241 - (993) 314 4200]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="20" width="119" height="16" uuid="04864cb0-c6e5-4c6c-b88c-1680e6cabf06"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HOSPITAL DEL SURESTE A.C.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="37" width="222" height="11" uuid="59cbbd75-6cea-4c77-beb9-d5fed2b9aadf"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Regino Hernández Llergo No. 103, Col. Nueva Villahermosa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="57" width="222" height="11" uuid="7204091e-fac5-4e4d-87dc-60862bf97df8"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Villahermosa, Tabasco.    RFC: HSU101217-AYA]]></text>
+			</staticText>
+			<line>
+				<reportElement x="3" y="13" width="569" height="1" uuid="a361e0da-d114-4ec8-9749-181fa6d437be"/>
+			</line>
+		</band>
+	</pageFooter>
+</jasperReport>
